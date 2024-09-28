@@ -31,6 +31,20 @@ int rechercherLivre(Livre stock[], int count, char titre_rechercher[]) {
     }
     return -1;  // Return -1 if the book is not found
 }
+void afficherQuantiteTotale(Livre stock[], int count) {
+    int total = 0;
+    for (int i = 0; i < count; i++) {
+        total += stock[i].quantite;
+    }
+    printf("Quantité totale de livres en stock: %d\n", total);
+}
+void supprimerLivre(Livre stock[], int *count, int index) {
+    for (int i = index; i < (*count) - 1; i++) {
+        stock[i] = stock[i + 1];  // Shift the array to the left
+    }
+    (*count)--;  // Decrease the count of books
+    printf("Livre supprimé avec succès.\n");
+}
 int main(){
     Livre stock[MAX_LIVRES];
     
@@ -75,6 +89,55 @@ switch(choice){
     afficherLivre(stock, count);
     }
     break;
+    case 3:  
+                printf("Entrer le titre du livre pour mettre à jour la quantité: ");
+                fgets(titre_rechercher, MAX_TITRE, stdin);
+                gitchar(); // Remove newline
+
+                index = rechercherLivre(stock, count, titre_rechercher);
+                if (index != -1) {
+                    printf("Entrer la nouvelle quantité: ");
+                    scanf("%d", &stock[index].quantite);
+                    printf("Quantité mise à jour avec succès.\n");
+                } else {
+                    printf("Livre non trouvé.\n");
+                }
+                break;
+                case 4:  // Delete a book from stock
+                printf("Entrer le titre du livre à supprimer: ");
+                fgets(titre_rechercher, MAX_TITRE, stdin);
+                titre_rechercher[strcspn(titre_rechercher, "\n")] = '\0';  // Remove newline
+
+                index = rechercherLivre(stock, count, titre_rechercher);
+                if (index != -1) {
+                    supprimerLivre(stock, &count, index);
+                } else {
+                    printf("Livre non trouvé.\n");
+                }
+                break;
+                case 4:  // Delete a book from stock
+                printf("Entrer le titre du livre à supprimer: ");
+                fgets(titre_rechercher, MAX_TITRE, stdin);
+                titre_rechercher[strcspn(titre_rechercher, "\n")] = '\0';  // Remove newline
+
+                index = rechercherLivre(stock, count, titre_rechercher);
+                if (index != -1) {
+                    supprimerLivre(stock, &count, index);
+                } else {
+                    printf("Livre non trouvé.\n");
+                }
+                break;
+  case 5:  // Display the total number of books in stock
+                afficherQuantiteTotale(stock, count);
+                break;
+
+            case 0:  // Exit the program
+                printf("Quitter le programme.\n");
+                break;
+
+            default:
+                printf("Choix invalide. Essayez encore.\n");
+                break;
 
     }
 
